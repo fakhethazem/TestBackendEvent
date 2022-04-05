@@ -18,7 +18,7 @@ let event_schema = new mongoose.Schema({
         }
     },
     location: String,
-    note: Number,
+    notes: [Number],
     logo: String,
 });
 

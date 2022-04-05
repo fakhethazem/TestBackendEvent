@@ -100,5 +100,30 @@ router.delete('/:id', async(req, res) => {
 });
 
 
+//add rate
+router.put('/add/rate/:id/:note', async(req, res) => {
+    let event = await Event.findById(req.params.id);
+    if (!event)
+        return res.status(404).send('Id not found');
+    try {
+        event.notes.push(req.params.note);
+        res.send(await event.save());
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+
+});
+
+//rating average
+router.get('/avg/rate/:id', async(req, res) => {
+    let event = await Event.findById(req.params.id);
+    let sum = event.notes.reduce((a, b) => a + b, 0);
+    let avg = (sum / event.notes.length) || 0;
+    //  res.status(400).send({ result: avg.toFixed(1) });
+    res.send(JSON.stringify(avg.toFixed(1)));
+
+});
+
+
 
 module.exports = router;
