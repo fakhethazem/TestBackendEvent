@@ -40,7 +40,8 @@ app.use(function(req, res, next) {
 app.use('/api/event', event_router);
 app.use('/api/user', user_router);
 app.use(express.static('public'));
-
+require('./middleware/extend-node-input-validator')
+require('./routers/app')(app);
 
 http.listen(3100, () => {
     console.log('started on port 3100');
